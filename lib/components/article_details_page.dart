@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/article_model.dart';
+import 'package:news_app/providers/articles_dao.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
@@ -10,18 +11,11 @@ class ArticlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ArticlesDao dau = ArticlesDao();
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        title: (article.title).length >= 15
-            ? Text(
-                article.title.substring(0, 15) + '...',
-                style: TextStyle(color: Colors.black),
-              )
-            : Text(
-                article.title,
-                style: TextStyle(color: Colors.black),
-              ),
+        title:Text('Article'),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
@@ -82,7 +76,9 @@ class ArticlePage extends StatelessWidget {
                                     color: Colors.white),
                               )
                             : Text(
-                                (article.author).length > 10 ? article.source.name : article.author,
+                                (article.author).length > 10
+                                    ? article.source.name
+                                    : article.author,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -130,7 +126,7 @@ class ArticlePage extends StatelessWidget {
               height: 32.0,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 RaisedButton(
                   onPressed: () {
@@ -147,20 +143,21 @@ class ArticlePage extends StatelessWidget {
                   color: Colors.white70,
                   elevation: 0.0,
                 ),
-                // RaisedButton(
-                //   TODO add to bookmarks
-                //   onPressed: () {},
-                //   child: Text(
-                //     'Add to Bookmarks',
-                //     style: TextStyle(fontSize: 18, color: Colors.red),
-                //   ),
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(8.0),
-                //     side: BorderSide(color: Colors.red),
-                //   ),
-                //   color: Colors.white70,
-                //   elevation: 0.0,
-                // ),
+                RaisedButton(
+                  onPressed: () {
+                    dau.insertArticles(article);
+                  },
+                  child: Text(
+                    'Add to Bookmarks',
+                    style: TextStyle(fontSize: 18, color: Colors.red),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    side: BorderSide(color: Colors.red),
+                  ),
+                  color: Colors.white70,
+                  elevation: 0.0,
+                ),
               ],
             ),
           ],

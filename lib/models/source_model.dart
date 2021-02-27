@@ -1,6 +1,6 @@
 class Source {
-  String id;
-  String name;
+  dynamic id;
+  dynamic name;
 
   //creating constructor
   Source({this.id, this.name});
