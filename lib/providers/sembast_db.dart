@@ -27,7 +27,8 @@ class AppDatabase {
     final appDocumentDir = await getApplicationDocumentsDirectory();
 
     final dbPath = join(appDocumentDir.path, 'Articles.db');
-
+    
+    // NOTE fix it ASAP
     // await databaseFactoryIo.deleteDatabase(dbPath);
 
     final database = await databaseFactoryIo.openDatabase(dbPath);

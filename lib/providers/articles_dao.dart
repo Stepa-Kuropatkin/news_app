@@ -12,6 +12,8 @@ class ArticlesDao {
     await _articleFolder.add(await _db, article.toJson());
   }
 
+
+  // NOTE fix API null cases
   Future<List<Article>> getAllArticles() async {
     var a = await _db;
     var recordSnapshot = await _articleFolder.find(a);
@@ -19,6 +21,7 @@ class ArticlesDao {
         .map<Article>((item) {
           try {
             final art = Article.fromJson(item.value);
+            print(item.value);
             return art;
           } catch (e) {
             print(e);
@@ -27,7 +30,6 @@ class ArticlesDao {
         })
         .where((x) => x != null)
         .toList();
-
     return articles;
   }
 }
