@@ -29,7 +29,7 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   void _loadMore() {
-    if (startCount < 20) {
+    if (startCount < original.length) {
       startCount = startCount + 5;
     }
     setState(() {});
@@ -37,7 +37,9 @@ class _NewsPageState extends State<NewsPage> {
 
   Future refreshState() async {
     await Future.delayed(Duration(seconds: 2));
-    setState(() {});
+    setState(() {
+      client.getArticle();
+    });
   }
 
   @override
