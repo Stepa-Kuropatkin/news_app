@@ -43,7 +43,7 @@ class Article {
         'title': title,
         'description': description,
         'url': url,
-        'img': urlToImage,
+        'urlToImage': urlToImage,
         'publishedAt': publishedAt,
         'content': content
       };

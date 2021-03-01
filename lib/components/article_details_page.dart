@@ -15,7 +15,7 @@ class ArticlePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        title:Text('Article'),
+        title: Text('Article'),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
@@ -29,22 +29,20 @@ class ArticlePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                article.urlToImage != null
-                    ? Container(
-                        height: 200.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(article.urlToImage),
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      )
-                    : Image.network(
-                        'http://cdn-ds.com/stock/2018-Subaru-Crosstrek-2-0i-Limited-Seattle-WA/seo/PGICARTERVW-JF2GTAMC1J8247483/sz_71918/457c03e771054022163930e3da280e08.jpg',
-                        fit: BoxFit.cover,
-                      ),
+                Container(
+                  height: 200.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: article.urlToImage != null
+                          ? NetworkImage(article.urlToImage)
+                          : AssetImage(
+                              'assets/457c03e771054022163930e3da280e08.jpg'),
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
                 SizedBox(
                   height: 8.0,
                 ),

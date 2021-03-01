@@ -21,7 +21,6 @@ class ArticlesDao {
         .map<Article>((item) {
           try {
             final art = Article.fromJson(item.value);
-            print(item.value);
             return art;
           } catch (e) {
             print(e);
