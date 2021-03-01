@@ -4,10 +4,23 @@ import 'package:news_app/providers/articles_dao.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-class ArticlePage extends StatelessWidget {
+class ArticlePage extends StatefulWidget {
   final Article article;
 
   ArticlePage({this.article});
+
+  @override
+  _ArticlePageState createState() => _ArticlePageState();
+}
+
+class _ArticlePageState extends State<ArticlePage> {
+  bool isPressed;
+
+  @override
+  void initState() {
+    super.initState();
+    isPressed = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +48,8 @@ class ArticlePage extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: article.urlToImage != null
-                          ? NetworkImage(article.urlToImage)
+                      image: widget.article.urlToImage != null
+                          ? NetworkImage(widget.article.urlToImage)
                           : AssetImage(
                               'assets/457c03e771054022163930e3da280e08.jpg'),
                     ),
@@ -47,7 +60,7 @@ class ArticlePage extends StatelessWidget {
                   height: 8.0,
                 ),
                 Text(
-                  article.title,
+                  widget.article.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
@@ -66,17 +79,18 @@ class ArticlePage extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: article.author == null || article.author == ''
+                        child: widget.article.author == null ||
+                                widget.article.author == ''
                             ? Text(
-                                article.source.name,
+                                widget.article.source.name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               )
                             : Text(
-                                (article.author).length > 10
-                                    ? article.source.name
-                                    : article.author,
+                                (widget.article.author).length > 10
+                                    ? widget.article.source.name
+                                    : widget.article.author,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -90,9 +104,9 @@ class ArticlePage extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: article.publishedAt != null
+                        child: widget.article.publishedAt != null
                             ? Text(
-                                article.publishedAt.substring(0, 10),
+                                widget.article.publishedAt.substring(0, 10),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -112,11 +126,11 @@ class ArticlePage extends StatelessWidget {
                 SizedBox(
                   height: 8.0,
                 ),
-                article.description == null
+                widget.article.description == null
                     ? Text(
                         'Wops! No description yet added :^(\n\nCheck the Source instead!')
                     : Text(
-                        article.description,
+                        widget.article.description,
                       ),
               ],
             ),
@@ -128,7 +142,7 @@ class ArticlePage extends StatelessWidget {
               children: [
                 RaisedButton(
                   onPressed: () {
-                    launch(article.url);
+                    launch(widget.article.url);
                   },
                   child: Text(
                     'Go to source',
@@ -142,16 +156,27 @@ class ArticlePage extends StatelessWidget {
                   elevation: 0.0,
                 ),
                 RaisedButton(
-                  onPressed: () {
-                    dau.insertArticles(article);
-                  },
-                  child: Text(
-                    'Add to Bookmarks',
-                    style: TextStyle(fontSize: 18, color: Colors.red),
-                  ),
+                  onPressed: isPressed
+                      ? () {
+                          dau.insertArticles(widget.article);
+                          setState(() {
+                            isPressed = !isPressed;
+                          });
+                        }
+                      : () {},
+                  child: isPressed
+                      ? Text(
+                          'Add to Bookmarks',
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        )
+                      : Text(
+                          'Already added',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    side: BorderSide(color: Colors.red),
+                    side:
+                        BorderSide(color: isPressed ? Colors.red : Colors.grey),
                   ),
                   color: Colors.white70,
                   elevation: 0.0,
