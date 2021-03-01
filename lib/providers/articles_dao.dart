@@ -13,7 +13,7 @@ class ArticlesDao {
   }
 
 
-  // NOTE fix API null cases
+
   Future<List<Article>> getAllArticles() async {
     var a = await _db;
     var recordSnapshot = await _articleFolder.find(a);

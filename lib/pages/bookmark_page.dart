@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/components/article_details_page.dart';
 import 'package:news_app/components/custom_listTile.dart';
 import 'package:news_app/models/article_model.dart';
 import 'package:news_app/providers/articles_dao.dart';
@@ -15,7 +14,7 @@ class BookmarkPage extends StatefulWidget {
 class _BookmarkPageState extends State<BookmarkPage> {
   ArticlesDao dau = ArticlesDao();
   ApiService client = ApiService();
-  Article forArticle;
+  Article forArticle = Article();
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +32,9 @@ class _BookmarkPageState extends State<BookmarkPage> {
             return ListView.builder(
               itemCount: articles.length,
               itemBuilder: (context, index) {
-                Article bookedArticle = articles[index];
                 return articles.length == null
-                    ? CircularProgressIndicator()
-                    : customListTile(bookedArticle, context);
+                    ? Center(child: Text('No data added'))
+                    : customListTile(articles[index], context);
               },
             );
           }
